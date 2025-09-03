@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Newspaper</title>
+  <h1><u>TODAY'S HEADLINES</u></h1>
+
+</head><body>
+<style>
+  body{
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    text-align:center;
+    background:brown;
+    margin:0;
+    padding:0;
+  
+  }
+  h1{
+    margin-top:40px;
+    color:aqua;
+
+  }
+  li{
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size:20px;
+    font-weight:600;
+    color:darkkhaki;
+    margin:12px 0;
+    text-align: left;
+  }
+
+
+</style>
+<select id="Selectnewspaper">
+  <option value="">Select a newspaper</option>
+  <option value="https://thehindu.com/news/international/?service=rss">The Hindu-International</option>
+  <option value="https://feeds.bbci.co.uk/news/world/rss.xml">BBC-World</option>
+  <option value="https://timesofindia.indiatimes.com/rssfeedstopstories.cms">Times of India</option>
+  <option value="https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml">New York Times</option>
+  
+</select>
+ 
+
+<button id="loadBtn">Loadheadlines</button>
+<div id="headlines"></div>
+
+ <script>
+    async function loadRSS() {
+      const rssUrl = document.getElementById("Selectnewspaper").value.trim();
+      if (!rssUrl) {
+        alert("Please enter a valid RSS feed URL");
+        return;
+      }
+
+      // Convert RSS to JSON using rss2json.com
+      const proxyUrl = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(rssUrl);
+
+      try {
+        const response = await fetch(proxyUrl);
+        const data = await response.json();
+
+        if (!data.items || data.items.length === 0) {
+          document.getElementById("headlines").innerHTML = "No headlines found.";
+          return;
+        }
+
+        let output = "<ul>";
+        data.items.forEach(item => {
+          output += `<li>${item.title}</li>`;
+        });
+        output += "</ul>";
+
+        document.getElementById("headlines").innerHTML = output;
+      } catch (error) {
+        console.error("Error loading RSS:", error);
+        document.getElementById("headlines").innerHTML = "Failed to load headlines.";
+      }
+    }
+
+    document.getElementById("loadBtn").addEventListener("click", loadRSS);
+
+    
+  </script>
+</body>
+</html>
