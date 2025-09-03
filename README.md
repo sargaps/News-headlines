@@ -4,11 +4,15 @@
 # Advantages⚡️
 
 ●Time saving⏰️
+
 ●Overview of the news🗒
+
 ●Less data usage⚙️
 
 # How to use?🤔
 
 1.Open the websute link on your browser
+
 2.Select a newspaper from the list
+
 3.Load headlines and read the latest headlines
